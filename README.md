@@ -1,9 +1,9 @@
-# Akeneo 2 Fredhopper Integration 
+# Akeneoo Fredhopper Integration 
 
 [![Build Status](https://travis-ci.com/snowio/akeneo3-fredhopper-integration.svg?branch=master)](https://travis-ci.com/snowio/akeneo3-fredhopper-integration)
 [![codecov](https://codecov.io/gh/snowio/akeneo3-fredhopper-integration/branch/master/graph/badge.svg)](https://codecov.io/gh/snowio/akeneo3-fredhopper-integration)
 
-Akeneo 2, Fredhopper integration package.
+Akeneo 3, Fredhopper integration package.
 
 ### Prerequisites
 
