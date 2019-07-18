@@ -1,0 +1,24 @@
+{
+    "name": "snowio/akeneo3-fredhopper-integration",
+    "require": {
+        "php": ">=7.1",
+        "snowio/akeneo3-data-model": "dev-master",
+        "snowio/fredhopper-data-model": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "SnowIO\\Akeneo3Fredhopper\\": "src"
+        }
+    },
+    "repositories": [
+        {"type": "composer", "url": "https://repo.packagist.com/snowio/"}
+    ],
+    "autoload-dev": {
+        "psr-4": {
+            "SnowIO\\Akeneo3Fredhopper\\Test\\": "test/unit"
+        }
+    }
+}
