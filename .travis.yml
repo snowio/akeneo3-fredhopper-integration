@@ -1,5 +1,5 @@
 language: php
-php: 7.1
+php: 7.2
 before_install:
   - composer self-update
   - composer config repositories.packagist.com composer https://repo.packagist.com/snowio/
