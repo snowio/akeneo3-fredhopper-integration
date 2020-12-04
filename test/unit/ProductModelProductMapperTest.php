@@ -62,6 +62,7 @@ class ProductModelProductMapperTest extends TestCase
             'attribute_values' => [
                 'color' => 'blue'
             ],
+            'localizations' => [],
         ]));
         $expected = ProductDataSet::of([FredhopperProductData::of('demontweeks_1001425')
             ->withAttributeValue(FredhopperAttributeValue::of('foo', 'bar'))]);
@@ -111,6 +112,7 @@ class ProductModelProductMapperTest extends TestCase
             'attribute_values' => [
                 'color' => 'blue'
             ],
+            'localizations' => [],
         ]));
         $expected = ProductDataSet::of([FredhopperProductData::of('1001425')
             ->withAttributeValue(FredhopperAttributeValue::of('color', 'blue'))]);
