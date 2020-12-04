@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace SnowIO\Akeneo3Fredhopper\Test;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use SnowIO\Akeneo3DataModel\AttributeData as AkeneoAttributeData;
 use SnowIO\Akeneo3DataModel\AttributeType as AkeneoAttributeType;
@@ -15,10 +16,10 @@ use SnowIO\Akeneo3DataModel\InternationalizedString as AkeneoInternationalizedSt
 class LocalizableAttributeMapperTest extends TestCase
 {
     /**
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidCreationOfMapper()
     {
+        self::expectException(InvalidArgumentException::class);
         LocalizableAttributeMapper::of([]);
     }
 
