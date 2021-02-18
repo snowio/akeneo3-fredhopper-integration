@@ -4,6 +4,7 @@ namespace SnowIO\Akeneo3Fredhopper;
 
 use SnowIO\Akeneo3DataModel\AttributeValueSet as AkeneoAttributeValueSet;
 use SnowIO\Akeneo3DataModel\PriceCollection;
+use SnowIO\FredhopperDataModel\AttributeData;
 use SnowIO\FredhopperDataModel\AttributeValueSet as FredhopperAttributeValueSet;
 use SnowIO\FredhopperDataModel\AttributeValue as FredhopperAttributeValue;
 use SnowIO\Akeneo3DataModel\AttributeValue as AkeneoAttributeValue;
@@ -25,7 +26,7 @@ class SimpleAttributeValueMapper
         $attributeValues = FredhopperAttributeValueSet::create();
         /** @var AkeneoAttributeValue $akeneoAttributeValue */
         foreach ($akeneoAttributeValues as $akeneoAttributeValue) {
-            $attributeCode = $akeneoAttributeValue->getAttributeCode();
+            $attributeCode = ($this->attributeIdMapper)($akeneoAttributeValue->getAttributeCode());
             $value = $akeneoAttributeValue->getValue();
             $locale = $akeneoAttributeValue->getScope()->getLocale();
             $fredhopperAttributeValue = FredhopperAttributeValue::of($attributeCode, $value)->withLocale($locale);
@@ -34,8 +35,10 @@ class SimpleAttributeValueMapper
         return $attributeValues;
     }
 
+    private $attributeIdMapper;
+
     private function __construct()
     {
-
+        $this->attributeIdMapper = [AttributeData::class, 'sanitizeId'];
     }
 }
