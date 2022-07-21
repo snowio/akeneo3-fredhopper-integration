@@ -22,7 +22,7 @@ class StandardAttributeMapper
         if ($akeneoAttributeData->isLocalizable()) {
             return AttributeDataSet::of([FredhopperAttributeData::of($attributeId, FredhopperAttributeType::ASSET, $labels)]);
         }
-        $fredhopperType = ($this->typeMapper)($akeneoAttributeData->getType());
+        $fredhopperType = ($this->typeMapper)($akeneoAttributeData);
         return AttributeDataSet::of([FredhopperAttributeData::of($attributeId, $fredhopperType, $labels)]);
     }
 
@@ -56,8 +56,13 @@ class StandardAttributeMapper
             AkeneoAttributeType::PRICE_COLLECTION => FredhopperAttributeType::FLOAT,
             AkeneoAttributeType::MULTISELECT => FredhopperAttributeType::SET,
         ];
-        return function (string $akeneoType) use ($typeMap) {
-            return $typeMap[$akeneoType] ?? 'text';
+        return function (AkeneoAttributeData $akeneoAttributeData) use ($typeMap) {
+            if ($akeneoAttributeData->getType() === AkeneoAttributeType::NUMBER && $akeneoAttributeData->isDecimalsAllowed()) {
+                $type = FredhopperAttributeType::FLOAT;
+            } else {
+                $type = $typeMap[$akeneoAttributeData->getType()] ?? 'text';
+            }
+            return $type;
         };
     }
 

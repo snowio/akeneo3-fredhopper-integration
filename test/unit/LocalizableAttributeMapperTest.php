@@ -25,10 +25,7 @@ class LocalizableAttributeMapperTest extends TestCase
 
     public function testMapWithLocales()
     {
-        $mapper = LocalizableAttributeMapper::of(['en_GB', 'fr_FR'])
-            ->withTypeMapper(function (string $type) {
-                return FredhopperAttributeType::LIST;
-            });
+        $mapper = LocalizableAttributeMapper::of(['en_GB', 'fr_FR']);
 
         $attributeData = AkeneoAttributeData::fromJson([
             'code' => 'size',
@@ -68,9 +65,6 @@ class LocalizableAttributeMapperTest extends TestCase
     public function testWithNameMapper()
     {
         $mapper = LocalizableAttributeMapper::create()
-            ->withTypeMapper(function (string $type) {
-                return FredhopperAttributeType::LIST;
-            })
             ->withNameMapper(function (AkeneoInternationalizedString $akeneoInternationalisedString) {
                 $result = FredhopperInternationalizedString::create();
                 foreach ($akeneoInternationalisedString as $akeneoLocalizedString) {
@@ -116,9 +110,7 @@ class LocalizableAttributeMapperTest extends TestCase
 
     public function testWithAttributeIdMapper()
     {
-        $mapper = LocalizableAttributeMapper::create()->withTypeMapper(function (string $type) {
-            return FredhopperAttributeType::LIST;
-        })->withAttributeIdMapper(function (string $akeneoAttributeCode, string $locale) {
+        $mapper = LocalizableAttributeMapper::create()->withAttributeIdMapper(function (string $akeneoAttributeCode, string $locale) {
             return FredhopperAttributeData::sanitizeId("{$akeneoAttributeCode}_{$locale}_test");
         });
 
@@ -159,9 +151,7 @@ class LocalizableAttributeMapperTest extends TestCase
 
     public function testAutomaticLocales()
     {
-        $mapper = LocalizableAttributeMapper::create()->withTypeMapper(function (string $type) {
-            return FredhopperAttributeType::LIST;
-        });
+        $mapper = LocalizableAttributeMapper::create();
 
         $attributeData = AkeneoAttributeData::fromJson([
             'code' => 'size',

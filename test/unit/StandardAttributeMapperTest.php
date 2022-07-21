@@ -42,6 +42,35 @@ class StandardAttributeMapperTest extends TestCase
         self::assertTrue($expected->equals($actual));
     }
 
+    public function testAttributeNumberWithDec()
+    {
+        $mapper = StandardAttributeMapper::create();
+        $actual = $mapper(AkeneoAttributeData::fromJson([
+            'code' => 'width',
+            'type' => AkeneoAttributeType::NUMBER,
+            'localizable' => false,
+            'scopable' => false,
+            'sort_order' => 34,
+            'labels' => [
+                'en_GB' => 'Width',
+                'es_ES' => 'Ancho',
+            ],
+            'group' => 'general',
+            'decimals_allowed' => true,
+            '@timestamp' => 1508491122,
+        ]));
+        $expected = AttributeDataSet::of([
+            FredhopperAttributeData::of(
+                'width',
+                FredhopperAttributeType::FLOAT,
+                FredhopperInternationalizedString::create()
+                    ->withValue('Width', 'en_GB')
+                    ->withValue('Ancho', 'es_ES')
+            ),
+        ]);
+        self::assertTrue($expected->equals($actual));
+    }
+
     public function testNonLocalisableAttribute()
     {
         $mapper = StandardAttributeMapper::create();
@@ -76,9 +105,6 @@ class StandardAttributeMapperTest extends TestCase
             ->withAttributeIdMapper(function (string $akeneoAttributeCode) {
                 return $akeneoAttributeCode . '_mapped';
             })
-            ->withTypeMapper(function (string $akeneoAttributeType) {
-                return FredhopperAttributeType::ASSET;
-            })
             ->withNameMapper(function (AkeneoInternationalizedString $labels) {
                 return FredhopperInternationalizedString::create()->withValue($labels->getValue('en_GB'), 'en_GB');
             });
@@ -98,7 +124,7 @@ class StandardAttributeMapperTest extends TestCase
         $expected = AttributeDataSet::of([
             FredhopperAttributeData::of(
                 'size_mapped',
-                FredhopperAttributeType::ASSET,
+                FredhopperAttributeType::LIST,
                 FredhopperInternationalizedString::create()->withValue('Size', 'en_GB')
             ),
         ]);
