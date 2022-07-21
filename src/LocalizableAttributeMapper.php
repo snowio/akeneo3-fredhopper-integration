@@ -28,7 +28,7 @@ class LocalizableAttributeMapper
     {
         /** @var AttributeDataSet $attributes */
         $attributes = AttributeDataSet::create();
-        $type = ($this->typeMapper)($akeneoAttributeData->getType());
+        $type = ($this->typeMapper)($akeneoAttributeData);
         $locales = $this->locales ?? $akeneoAttributeData->getLabels()->getLocales();
         foreach ($locales as $locale) {
             $attributeId = ($this->attributeIdMapper)($akeneoAttributeData->getCode(), $locale);
