@@ -127,6 +127,7 @@ class StandardAttributeMapperTest extends TestCase
         ]);
         self::assertTrue($expected->equals($actual));
     }
+
     public function testNonLocalizableAttributeWithNameMapper()
     {
         $mapper = StandardAttributeMapper::create()
