@@ -42,34 +42,6 @@ class StandardAttributeMapperTest extends TestCase
         self::assertTrue($expected->equals($actual));
     }
 
-    public function testLocalisableDatetimeAttribute()
-    {
-        $mapper = StandardAttributeMapper::create();
-        $actual = $mapper(AkeneoAttributeData::fromJson([
-            'code' => 'size',
-            'type' => AkeneoAttributeType::SIMPLESELECT,
-            'localizable' => true,
-            'scopable' => true,
-            'sort_order' => 34,
-            'labels' => [
-                'en_GB' => 'Size',
-                'fr_FR' => 'Taille',
-            ],
-            'group' => 'general',
-            '@timestamp' => 1508491122,
-        ]));
-        $expected = AttributeDataSet::of([
-            FredhopperAttributeData::of(
-                'size',
-                FredhopperAttributeType::ASSET,
-                FredhopperInternationalizedString::create()
-                    ->withValue('Size', 'en_GB')
-                    ->withValue('Taille', 'fr_FR')
-            ),
-        ]);
-        self::assertTrue($expected->equals($actual));
-    }
-
     public function testAttributeNumberWithDec()
     {
         $mapper = StandardAttributeMapper::create();
@@ -151,6 +123,35 @@ class StandardAttributeMapperTest extends TestCase
                 FredhopperInternationalizedString::create()
                     ->withValue('Width', 'en_GB')
                     ->withValue('Ancho', 'es_ES')
+            ),
+        ]);
+        self::assertTrue($expected->equals($actual));
+    }
+
+    public function testAttributeTypeDate()
+    {
+        $mapper = StandardAttributeMapper::create();
+        $actual = $mapper(AkeneoAttributeData::fromJson([
+            'code' => 'special_from_date',
+            'type' => AkeneoAttributeType::DATE,
+            'localizable' => false,
+            'scopable' => false,
+            'sort_order' => 34,
+            'labels' => [
+                'en_GB' => 'Special From Date',
+                'es_ES' => 'Especial desde fecha',
+            ],
+            'group' => 'general',
+            'decimals_allowed' => true,
+            '@timestamp' => 1508491122,
+        ]));
+        $expected = AttributeDataSet::of([
+            FredhopperAttributeData::of(
+                'special_from_date',
+                FredhopperAttributeType::DATETIME,
+                FredhopperInternationalizedString::create()
+                    ->withValue('Special From Date', 'en_GB')
+                    ->withValue('Especial desde fecha', 'es_ES')
             ),
         ]);
         self::assertTrue($expected->equals($actual));
