@@ -42,6 +42,34 @@ class StandardAttributeMapperTest extends TestCase
         self::assertTrue($expected->equals($actual));
     }
 
+    public function testLocalisableDatetimeAttribute()
+    {
+        $mapper = StandardAttributeMapper::create();
+        $actual = $mapper(AkeneoAttributeData::fromJson([
+            'code' => 'size',
+            'type' => AkeneoAttributeType::SIMPLESELECT,
+            'localizable' => true,
+            'scopable' => true,
+            'sort_order' => 34,
+            'labels' => [
+                'en_GB' => 'Size',
+                'fr_FR' => 'Taille',
+            ],
+            'group' => 'general',
+            '@timestamp' => 1508491122,
+        ]));
+        $expected = AttributeDataSet::of([
+            FredhopperAttributeData::of(
+                'size',
+                FredhopperAttributeType::ASSET,
+                FredhopperInternationalizedString::create()
+                    ->withValue('Size', 'en_GB')
+                    ->withValue('Taille', 'fr_FR')
+            ),
+        ]);
+        self::assertTrue($expected->equals($actual));
+    }
+
     public function testAttributeNumberWithDec()
     {
         $mapper = StandardAttributeMapper::create();

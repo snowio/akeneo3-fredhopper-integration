@@ -55,6 +55,7 @@ class StandardAttributeMapper
             AkeneoAttributeType::NUMBER => FredhopperAttributeType::INT,
             AkeneoAttributeType::PRICE_COLLECTION => FredhopperAttributeType::FLOAT,
             AkeneoAttributeType::MULTISELECT => FredhopperAttributeType::SET,
+            AkeneoAttributeType::DATE => FredhopperAttributeType::DATETIME
         ];
         return function (AkeneoAttributeData $akeneoAttributeData) use ($typeMap) {
             if ($akeneoAttributeData->getType() === AkeneoAttributeType::NUMBER && $akeneoAttributeData->isDecimalsAllowed()) {
